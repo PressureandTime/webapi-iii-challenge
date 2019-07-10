@@ -4,7 +4,8 @@
   "description": "Web API Blog Project",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,9 @@
     "sqlite3": "^4.0.6"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
     "knex-cleaner": "^1.1.4",
     "nodemon": "^1.18.10"
   }
