@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validatePostId, async (req, res) => {
   const id = req.params.id;
   try {
     const posts = await postDb.getById(id);
@@ -65,6 +65,28 @@ router.put('/:id', async (req, res) => {
 
 // custom middleware
 
-function validatePostId(req, res, next) {}
+async function validatePostId(req, res, next) {
+  const id = Number(req.params.id);
+  if (Number.isNaN(id) || id % 1 !== 0 || id < 0) {
+    return res.status(400).send({
+      message: 'invalid post id',
+    });
+  }
+  try {
+    const post = await postDb.getById(id);
+    if (!post) {
+      return res.status(400).send({
+        message: 'invalid post id',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: 'The user information could not be retrieved.',
+    });
+  }
+  return next();
+};
+
 
 module.exports = router;
